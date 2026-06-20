@@ -2,19 +2,44 @@
 #include <iostream>
 #include <random>
 
+namespace {
+    class GetInit {
+
+        int r = 0;
+        int g = 0;
+        int b = 0;
+
+    public:
+
+        virtual ~GetInit() = default;
+
+        GetInit(const int r, const int g, const int b) {
+            this->r = r;
+            this->g = g;
+            this->b = b;
+        }
+
+        virtual void PrintColorCodes() {
+            std::println("R: {}", this->r);
+            std::println("G: {}", this->g);
+            std::println("B: {}", this->b);
+        }
+    };
+}
 
 int main() {
     std::random_device colors;
     std::mt19937 rand_num(colors());
     std::uniform_real_distribution<double> colorCode(1, 254 + 1);
 
+
     const int r = static_cast<int>(colorCode(rand_num));
     const int g = static_cast<int>(colorCode(rand_num));
     const int b = static_cast<int>(colorCode(rand_num));
 
-    std::cout << "R: " <<  r << std::endl;
-    std::cout << "G: " <<  g << std::endl;
-    std::cout << "B: " <<  b << std::endl;
+    GetInit color(r,g, b);
+
+    color.PrintColorCodes();
 
     std::cout << std::hex << r << std::hex << g << std::hex << b;
 
@@ -28,6 +53,6 @@ int main() {
         fFile.close();
     }
 
-    system("pause > 0");
+
     return 0;
 }
